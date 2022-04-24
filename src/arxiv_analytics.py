@@ -57,40 +57,46 @@ class ArxivQuery :
 			raise ValueError("Illegal value.")
 		return self
 
+	@staticmethod
+	def _escape(text):
+		if ' ' not in text: return text
+		query = "%22" + text.replace(' ','+') + "%22"
+		return query
+
 	def title( self, query ):
-		self.query_list_.append("ti:"+query)
+		self.query_list_.append("ti:"+self._escape(query))
 		return self
 
 	def author( self, query ):
-		self.qeury_list_.append("au:"+query)
+		self.qeury_list_.append("au:"+self._escape(query))
 		return self
 
 	def abstract( self, query ):
-		self.query_list_.append("abs:"+query)
+		self.query_list_.append("abs:"+self._escape(query))
 		return self
 
 	def comment( self, query ):
-		self.query_list_.append("co:"+query)
+		self.query_list_.append("co:"+self._escape(query))
 		return self
 
-	def reference( self, query ):
-		self.query_list_.append("jr:"+query)
+	def journal( self, query ):
+		self.query_list_.append("jr:"+self._escape(query))
 		return self
 
 	def category( self, query ):
-		self.query_list_.append("cat:"+query)
+		self.query_list_.append("cat:"+self._escape(query))
 		return self
 
 	def id( self, query ):
-		self.id_list_.append(query)
+		self.id_list_.append(self._escape(query))
 		return self
 
 	def report_number( self, query ):
-		self.query_list_.append("rn:"+query)
+		self.query_list_.append("rn:"+self._escape(query))
 		return self
 
 	def all( self, query ):
-		self.query_list_.append("all:"+query)
+		self.query_list_.append("all:"+self._escape(query))
 		return self
 
 	def AND( self ):
@@ -105,12 +111,12 @@ class ArxivQuery :
 		self.query_list_.append("ANDNOT")
 		return self
 
-	def open_paren( self ):
-		self.query_list_.append("(")
+	def open_parens( self ):
+		self.query_list_.append("%28")
 		return self
 
-	def close_paren( self ):
-		self.query_list_.append(")")
+	def close_parens( self ):
+		self.query_list_.append("%29")
 		return self
 
 	def _make_search_query( self ):
