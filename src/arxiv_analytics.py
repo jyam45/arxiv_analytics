@@ -213,6 +213,14 @@ class ArxivData:
 			items.append(item)
 		return items
 
+	def histgram(self,tag):
+		hist={}
+		for entry in self.obj_data_['entries']:
+			item = entry[tag].replace('\n','').replace('  ',' ')
+			if not item in hist: hist[item]=0
+			hist[item]+=1
+		return pd.DataFrame.from_dict(hist, orient="index", columns=["count"])
+
 	def wordcloud(self,tag,background_color="white",width=800,height=600,stop_words=None):
 		# 分析対象の要素から文章を抽出し、１つの文字列にまとめる
 		text=""

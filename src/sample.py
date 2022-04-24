@@ -10,14 +10,19 @@ query = ax.ArxivQuery()
 query.max_results(1000)
 query.sortby("submittedDate")
 query.sortorder("descending")
-query.category("cs.LG").AND().abstract("deep learning")
+#query.category("cs.LG").AND().abstract("deep learning")
+#query.abstract("LiNGAM")
+query.abstract("causal discovery")
 
 print(query)
 
 data = ax.ArxivData(query)
 
-collection = data.collect('title')
-print(collection)
+#collection = data.collect('category')
+#print(collection)
+
+histgram = data.histgram('category')
+print(histgram)
 
 trends = data.trend()
 print(trends)
